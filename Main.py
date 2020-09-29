@@ -8,12 +8,14 @@ def start():
     os.environ['SDL_VIDEO_CENTERED'] = '1'
     pygame.init()
     window = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
+    clock = pygame.time.Clock()
     pygame.display.set_caption('Flappy Bird Neural Network')
     game = GameController.Game()
 
     run = True
 
     while run:
+        clock.tick(60)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

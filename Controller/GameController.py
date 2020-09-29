@@ -40,6 +40,9 @@ class Game:
         for pipe in remove_pipes:
             self.pipes.remove(pipe)
 
+        if self.player.y + self.player.img.get_height() > self.floor.y:
+            pass
+
     def render(self, win):
         win.blit(pygame.image.load(GlobalConstants.BACKGROUND_SPRITE).convert(), (0, 0))
 

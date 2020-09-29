@@ -19,7 +19,7 @@ class Bird:
         self.displacement_limit = Constants.DISPLACEMENT_LIMIT
 
         self.last_update = pygame.time.get_ticks()
-        self.frame_rate = 75
+        self.frame_rate = 60
 
     def jump(self):
         self.velocity = Constants.JUMP_HEIGHT
@@ -29,7 +29,6 @@ class Bird:
     def run(self):
 
         # get keys pressed
-
         key_pressed = pygame.key.get_pressed()
         if key_pressed[pygame.K_SPACE]:
             self.jump()
@@ -45,18 +44,18 @@ class Bird:
 
         # Calculates the displacement value of the object
         self.tick_count += 1
-
         displacement = self.velocity * self.tick_count + (1.5 * (self.tick_count ** 2))
-
-        # Debug
-        # if key_pressed[pygame.K_o]:
-        #     displacement = 0
 
         if displacement >= self.displacement_limit:
             displacement = self.displacement_limit
         elif displacement < 0:
             displacement -= 2
 
+        # Debug
+        # if key_pressed[pygame.K_o]:
+        #     displacement = 0
+
+        # setting bird do fall
         self.y = self.y + displacement
 
         # decides if the object is falling and set falling angle
