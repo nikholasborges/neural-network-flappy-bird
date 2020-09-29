@@ -1,4 +1,4 @@
-import Util.GameConstants as Constants
+from Util.GameConstants import Bird as Constants
 import pygame
 
 
@@ -7,25 +7,29 @@ class Bird:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        self.height = self.y
+
         self.sprite_frames = 0
-        self.max_sprite_frames = len(Constants.Bird.BIRD_SPRITE)
-        self.img = pygame.image.load(Constants.Bird.BIRD_SPRITE[0])
+        self.max_sprite_frames = len(Constants.BIRD_SPRITE)
+        self.img = pygame.image.load(Constants.BIRD_SPRITE[0])
+
         self.tilt = 0
         self.tick_count = 0
-        self.velocity = 5
-        self.height = self.y
-        self.frame = 0
+        self.velocity = 3
+        self.displacement_limit = Constants.DISPLACEMENT_LIMIT
+
         self.last_update = pygame.time.get_ticks()
         self.frame_rate = 75
 
     def jump(self):
-        self.velocity = -10
+        self.velocity = Constants.JUMP_HEIGHT
         self.tick_count = 0
         self.height = self.y
 
     def run(self):
 
         # get keys pressed
+
         key_pressed = pygame.key.get_pressed()
         if key_pressed[pygame.K_SPACE]:
             self.jump()
@@ -44,11 +48,12 @@ class Bird:
 
         displacement = self.velocity * self.tick_count + (1.5 * (self.tick_count ** 2))
 
-        if key_pressed[pygame.K_o]:
-            displacement = 0
+        # Debug
+        # if key_pressed[pygame.K_o]:
+        #     displacement = 0
 
-        if displacement >= 16:
-            displacement = 16
+        if displacement >= self.displacement_limit:
+            displacement = self.displacement_limit
         elif displacement < 0:
             displacement -= 2
 
@@ -56,16 +61,16 @@ class Bird:
 
         # decides if the object is falling and set falling angle
         if displacement < 0 or self.y < self.height + 50:
-            if self.tilt < Constants.Bird.MAX_ROTATION:
-                self.tilt = Constants.Bird.MAX_ROTATION
+            if self.tilt < Constants.MAX_ROTATION:
+                self.tilt = Constants.MAX_ROTATION
         else:
             if self.tilt > - 90:
-                self.tilt -= Constants.Bird.ROTATION_VELOCITY
+                self.tilt -= Constants.ROTATION_VELOCITY
 
     def render(self, window):
 
         # render object sprites
-        self.img = pygame.image.load(Constants.Bird.BIRD_SPRITE[self.sprite_frames]).convert_alpha()
+        self.img = pygame.image.load(Constants.BIRD_SPRITE[self.sprite_frames]).convert_alpha()
 
         # Rotate in the corner of the bird sprite
         rotated_img = pygame.transform.rotate(self.img, self.tilt)

@@ -16,11 +16,19 @@ class Bird:
 
     MAX_ROTATION = 20
     ROTATION_VELOCITY = 20
-
+    JUMP_HEIGHT = -8
+    DISPLACEMENT_LIMIT = 10
+    DEFAULT_DRAW_X_AXIS = 250
+    DEFAULT_DRAW_Y_AXIS = 250
 
 class Pipe:
-    PIPE_SPRITE = None
+    PIPE_SPRITE = os.path.join('.\\Resources\\img', 'pipe.png')
+    GAP = 180
+    VELOCITY = 5
+    DRAW_SPEED = 800
 
 
 class Floor:
-    FLOOR_SPRITE = None
+    FLOOR_SPRITE = os.path.join('.\\Resources\\img', 'floor.png')
+    VELOCITY = 5
+    DEFAULT_HEIGHT = 870
