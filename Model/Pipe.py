@@ -23,9 +23,6 @@ class Pipe:
         self.top = self.height - self.PIPE_TOP.get_height()
         self.bottom = self.height + Constants.GAP
 
-    def run(self):
-        self.x -= Constants.VELOCITY
-
     def collide(self, bird):
         bird_mask = bird.get_mask()
         top_mask = pygame.mask.from_surface(self.PIPE_TOP)
@@ -41,6 +38,9 @@ class Pipe:
             return True
 
         return False
+
+    def run(self):
+        self.x -= Constants.VELOCITY
 
     def render(self, win):
         win.blit(self.PIPE_TOP, (self.x, self.top))

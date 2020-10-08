@@ -1,4 +1,5 @@
-from Util.GameConstants import Bird as Constants
+from Util.GameConstants import Bird as BirdConstants
+from Util.GameConstants import Pipe as PipeConstants
 import pygame
 
 
@@ -10,29 +11,34 @@ class Bird:
         self.height = self.y
 
         self.sprite_frames = 0
-        self.max_sprite_frames = len(Constants.BIRD_SPRITE)
-        self.img = pygame.image.load(Constants.BIRD_SPRITE[0])
+        self.max_sprite_frames = len(BirdConstants.BIRD_SPRITE)
+        self.default_sprite = pygame.image.load(BirdConstants.BIRD_SPRITE[0]).convert_alpha()
+        self.bird_sprite = [pygame.image.load(BirdConstants.BIRD_SPRITE[0]).convert_alpha(),
+                            pygame.image.load(BirdConstants.BIRD_SPRITE[1]).convert_alpha(),
+                            pygame.image.load(BirdConstants.BIRD_SPRITE[2]).convert_alpha(),
+                            pygame.image.load(BirdConstants.BIRD_SPRITE[3]).convert_alpha()]
 
         self.tilt = 0
         self.tick_count = 0
         self.velocity = 3
-        self.displacement_limit = Constants.DISPLACEMENT_LIMIT
+        self.displacement = 0
+        self.displacement_limit = BirdConstants.DISPLACEMENT_LIMIT
 
         self.last_update = pygame.time.get_ticks()
-        self.frame_rate = 60
+        self.frame_rate = 30
+
+        self.score = 0
+
+        self.pipe_collided = False
+        self.floor_collided = False
 
     def jump(self):
-        self.velocity = Constants.JUMP_HEIGHT
-        self.tick_count = 0
-        self.height = self.y
+        if not self.pipe_collided and not self.floor_collided:
+            self.velocity = BirdConstants.JUMP_HEIGHT
+            self.tick_count = 0
+            self.height = self.y
 
     def run(self):
-
-        # get keys pressed
-        key_pressed = pygame.key.get_pressed()
-        if key_pressed[pygame.K_SPACE]:
-            self.jump()
-
         # set bird frames per frame_rate value
         now = pygame.time.get_ticks()
 
@@ -44,38 +50,40 @@ class Bird:
 
         # Calculates the displacement value of the object
         self.tick_count += 1
-        displacement = self.velocity * self.tick_count + (1.5 * (self.tick_count ** 2))
+        self.displacement = self.velocity * self.tick_count + (1.5 * (self.tick_count ** 2))
 
-        if displacement >= self.displacement_limit:
-            displacement = self.displacement_limit
-        elif displacement < 0:
-            displacement -= 2
+        if self.displacement >= self.displacement_limit:
+            self.displacement = self.displacement_limit
+        elif self.displacement < 0:
+            self.displacement -= 2
 
-        # Debug
-        # if key_pressed[pygame.K_o]:
-        #     displacement = 0
+        # setting bird to stop moving if pipe collided
+        if self.pipe_collided or self.floor_collided:
+            self.x -= PipeConstants.VELOCITY
+            self.sprite_frames = 0
 
-        # setting bird do fall
-        self.y = self.y + displacement
+        # setting bird do fall if not floor collided
+        if not self.floor_collided:
+            self.y = self.y + self.displacement
 
         # decides if the object is falling and set falling angle
-        if displacement < 0 or self.y < self.height + 50:
-            if self.tilt < Constants.MAX_ROTATION:
-                self.tilt = Constants.MAX_ROTATION
+        if self.displacement < 0 or self.y < self.height + 50:
+            if self.tilt < BirdConstants.MAX_ROTATION:
+                self.tilt = BirdConstants.MAX_ROTATION
         else:
             if self.tilt > - 90:
-                self.tilt -= Constants.ROTATION_VELOCITY
+                self.tilt -= BirdConstants.ROTATION_VELOCITY
 
     def render(self, window):
 
         # render object sprites
-        self.img = pygame.image.load(Constants.BIRD_SPRITE[self.sprite_frames]).convert_alpha()
+        self.default_sprite = self.bird_sprite[self.sprite_frames]
 
         # Rotate in the corner of the bird sprite
-        rotated_img = pygame.transform.rotate(self.img, self.tilt)
-        new_rect = rotated_img.get_rect(center=self.img.get_rect(topleft=(self.x, self.y)).center)
+        rotated_img = pygame.transform.rotate(self.default_sprite, self.tilt)
+        new_rect = rotated_img.get_rect(center=self.default_sprite.get_rect(topleft=(self.x, self.y)).center)
 
         window.blit(rotated_img, new_rect.topleft)
 
     def get_mask(self):
-        return pygame.mask.from_surface(self.img)
+        return pygame.mask.from_surface(self.default_sprite)

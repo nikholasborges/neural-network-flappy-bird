@@ -3,19 +3,19 @@ import pygame
 
 
 class Global:
-    WIDTH = 600
+    WIDTH = 800
     HEIGHT = 1000
 
     BACKGROUND_SPRITE = os.path.join('.\\Resources\\img', 'background.png')
 
 
 class Bird:
-    MAX_ROTATION = 20
-    ROTATION_VELOCITY = 20
+    MAX_ROTATION = 18
+    ROTATION_VELOCITY = 5
     JUMP_HEIGHT = -8
     DISPLACEMENT_LIMIT = 10
-    DEFAULT_DRAW_X_AXIS = 250
-    DEFAULT_DRAW_Y_AXIS = 250
+    DEFAULT_DRAW_X_AXIS = 450
+    DEFAULT_DRAW_Y_AXIS = 500
 
     BIRD_SPRITE = [os.path.join('.\\Resources\\img', 'bird-0.png'),
                    os.path.join('.\\Resources\\img', 'bird-1.png'),
@@ -24,7 +24,7 @@ class Bird:
 
 
 class Pipe:
-    GAP = 180
+    GAP = 190
     VELOCITY = 5
     DRAW_SPEED = 800
 

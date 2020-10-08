@@ -5,7 +5,7 @@ from Util.GameConstants import Floor as Constants
 class Floor:
 
     def __init__(self, y):
-        self.img = pygame.image.load(Constants.FLOOR_SPRITE).convert()
+        self.img = pygame.image.load(Constants.FLOOR_SPRITE).convert_alpha()
         self.width = self.img.get_width()
 
         self.y = y
