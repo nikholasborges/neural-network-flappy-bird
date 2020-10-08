@@ -17,10 +17,27 @@ class Bird:
     DEFAULT_DRAW_X_AXIS = 450
     DEFAULT_DRAW_Y_AXIS = 500
 
-    BIRD_SPRITE = [os.path.join('.\\Resources\\img', 'bird-0.png'),
-                   os.path.join('.\\Resources\\img', 'bird-1.png'),
-                   os.path.join('.\\Resources\\img', 'bird-2.png'),
-                   os.path.join('.\\Resources\\img', 'bird-3.png')]
+    BIRD_SPRITE_DICT = {'1': [os.path.join('.\\Resources\\img', 'yellow-bird-0.png'),
+                              os.path.join('.\\Resources\\img', 'yellow-bird-1.png'),
+                              os.path.join('.\\Resources\\img', 'yellow-bird-2.png'),
+                              os.path.join('.\\Resources\\img', 'yellow-bird-3.png')],
+                        '2': [os.path.join('.\\Resources\\img', 'blue-bird-0.png'),
+                              os.path.join('.\\Resources\\img', 'blue-bird-1.png'),
+                              os.path.join('.\\Resources\\img', 'blue-bird-2.png'),
+                              os.path.join('.\\Resources\\img', 'blue-bird-3.png')],
+                        '3': [os.path.join('.\\Resources\\img', 'green-bird-0.png'),
+                              os.path.join('.\\Resources\\img', 'green-bird-1.png'),
+                              os.path.join('.\\Resources\\img', 'green-bird-2.png'),
+                              os.path.join('.\\Resources\\img', 'green-bird-3.png')],
+                        '4': [os.path.join('.\\Resources\\img', 'purple-bird-0.png'),
+                              os.path.join('.\\Resources\\img', 'purple-bird-1.png'),
+                              os.path.join('.\\Resources\\img', 'purple-bird-2.png'),
+                              os.path.join('.\\Resources\\img', 'purple-bird-3.png')],
+                        '5': [os.path.join('.\\Resources\\img', 'red-bird-0.png'),
+                              os.path.join('.\\Resources\\img', 'red-bird-1.png'),
+                              os.path.join('.\\Resources\\img', 'red-bird-2.png'),
+                              os.path.join('.\\Resources\\img', 'red-bird-3.png')],
+                        }
 
 
 class Pipe:

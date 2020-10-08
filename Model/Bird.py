@@ -1,6 +1,7 @@
 from Util.GameConstants import Bird as BirdConstants
 from Util.GameConstants import Pipe as PipeConstants
 import pygame
+import random
 
 
 class Bird:
@@ -11,12 +12,15 @@ class Bird:
         self.height = self.y
 
         self.sprite_frames = 0
-        self.max_sprite_frames = len(BirdConstants.BIRD_SPRITE)
-        self.default_sprite = pygame.image.load(BirdConstants.BIRD_SPRITE[0]).convert_alpha()
-        self.bird_sprite = [pygame.image.load(BirdConstants.BIRD_SPRITE[0]).convert_alpha(),
-                            pygame.image.load(BirdConstants.BIRD_SPRITE[1]).convert_alpha(),
-                            pygame.image.load(BirdConstants.BIRD_SPRITE[2]).convert_alpha(),
-                            pygame.image.load(BirdConstants.BIRD_SPRITE[3]).convert_alpha()]
+        self.bird_sprite_list = BirdConstants.BIRD_SPRITE_DICT[
+            str(random.randint(1, len(BirdConstants.BIRD_SPRITE_DICT)))]
+        self.default_sprite = pygame.image.load(self.bird_sprite_list[0]).convert_alpha()
+        self.bird_sprite = [pygame.image.load(self.bird_sprite_list[0]).convert_alpha(),
+                            pygame.image.load(self.bird_sprite_list[1]).convert_alpha(),
+                            pygame.image.load(self.bird_sprite_list[2]).convert_alpha(),
+                            pygame.image.load(self.bird_sprite_list[3]).convert_alpha()]
+
+        self.max_sprite_frames = len(self.bird_sprite_list)
 
         self.tilt = 0
         self.tick_count = 0

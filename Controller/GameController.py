@@ -32,14 +32,16 @@ class Game:
         for pipe in self.pipes:
             for bird in self.birds:
 
-                # check collisions
+                # check collisions and giving fitness penalty for failed birds
                 if pipe.collide(bird):
                     bird.pipe_collided = True
+                    genomes_list[self.birds.index(bird)].fitness -= 5
 
                 if bird.y + bird.default_sprite.get_height() > self.floor.y or bird.y < 0:
                     bird.floor_collided = True
+                    genomes_list[self.birds.index(bird)].fitness -= 10
 
-                # check actual bird score
+                # check actual bird score and giving fitness score for passing pipes
                 if not pipe.passed and pipe.x + pipe.PIPE_TOP.get_width() < bird.x:
                     genomes_list[self.birds.index(bird)].fitness += 5
                     bird.score += 1
@@ -48,7 +50,6 @@ class Game:
 
                 # remove failed birds
                 if bird.pipe_collided or bird.floor_collided:
-                    genomes_list[self.birds.index(bird)].fitness -= 5
                     networks.pop(self.birds.index(bird))
                     genomes_list.pop(self.birds.index(bird))
                     self.birds.pop(self.birds.index(bird))

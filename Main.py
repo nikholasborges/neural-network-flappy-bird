@@ -1,3 +1,4 @@
+import random
 import pygame
 import os
 import neat
@@ -23,7 +24,7 @@ def start():
 
     pygame.display.set_caption('Flappy Bird Neural Network')
 
-    winner = population.run(fitness_function, 20)
+    population.run(fitness_function, 20)
 
 
 def fitness_function(genomes, config):
@@ -36,7 +37,7 @@ def fitness_function(genomes, config):
     for genome_id, genome in genomes:
         network = neat.nn.FeedForwardNetwork.create(genome, config)
         networks.append(network)
-        game.birds.append(Bird.Bird(250, 250))
+        game.birds.append(Bird.Bird(random.randint(200, 300), 250))
         genome.fitness = 0
         genomes_list.append(genome)
 
@@ -59,11 +60,15 @@ def fitness_function(genomes, config):
 
         if len(networks) == 0:
             run = False
+    # debug
+    stats_title = '*' * 5 + ' Best Generation Bird Stats ' + '*' * 5
 
     print('')
+    print(stats_title)
     print(f'Best Genome Fitness: {game.sorted_genomes[0].fitness}')
     print(f'Best Bird Score: {game.best_bird.score}')
     print(f'Best Network: {game.best_network}')
+    print('*' * len(stats_title))
     print('')
 
 
