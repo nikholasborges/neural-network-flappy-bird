@@ -1,10 +1,8 @@
 import pygame
-import neat
-from Model import Bird, Floor, Pipe
+from Model import Floor, Pipe
 from Util.GameConstants import Global as GlobalConstants
 from Util.GameConstants import Pipe as PipeConstants
 from Util.GameConstants import Floor as FloorConstants
-from Util.GameConstants import Bird as BirdConstants
 
 
 class Game:
