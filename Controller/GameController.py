@@ -12,6 +12,8 @@ class Game:
         self.background_sprite = pygame.image.load(
             GlobalConstants.BACKGROUND_SPRITE).convert_alpha()
 
+        self.font = pygame.font.Font(GlobalConstants.FONT, 26)
+
         self.birds = []
 
         self.sorted_genomes = []
@@ -91,7 +93,7 @@ class Game:
         # if key_pressed[pygame.K_SPACE]:
         #     self.bird.jump()
 
-    def render(self, win):
+    def render(self, win, generation):
         win.blit(self.background_sprite, (0, 0))
 
         for pipe in self.pipes:
@@ -101,5 +103,13 @@ class Game:
             bird.render(win)
 
         self.floor.render(win)
+
+        generation_count = self.font.render("Generation: " + str(generation), True, (255, 255, 255))
+        genomes_count = self.font.render("Genomes: " + str(len(self.sorted_genomes)), True, (255, 255, 255))
+        best_bird_points = self.font.render("Best Genome Points: " + str(self.best_bird.score), True, (255, 255, 255))
+
+        win.blit(generation_count, (15, 15))
+        win.blit(genomes_count, (15, 55))
+        win.blit(best_bird_points, (GlobalConstants.WIDTH - best_bird_points.get_width() - 15, 15))
 
         pygame.display.update()

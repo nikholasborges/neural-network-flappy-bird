@@ -8,69 +8,72 @@ from Util.NeatConstants import NeatConstants
 from Model import Bird
 
 
-def start():
-    # neat config
-    neat_config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction,
-                                     neat.DefaultSpeciesSet, neat.DefaultStagnation,
-                                     NeatConstants.CONFIG_PATH)
+class Main:
 
-    population = neat.Population(neat_config)
-    population.add_reporter(neat.StdOutReporter(True))
-    population.add_reporter(neat.StatisticsReporter())
+    def __init__(self):
 
-    # game configs
-    os.environ['SDL_VIDEO_CENTERED'] = '1'
-    pygame.init()
+        self.neat_config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction,
+                                         neat.DefaultSpeciesSet, neat.DefaultStagnation,
+                                         NeatConstants.CONFIG_PATH)
 
-    pygame.display.set_caption('Flappy Bird Neural Network')
+        self.population = neat.Population(self.neat_config)
+        self.population.add_reporter(neat.StdOutReporter(True))
+        self.population.add_reporter(neat.StatisticsReporter())
 
-    population.run(fitness_function, 20)
+        # game configs
+        os.environ['SDL_VIDEO_CENTERED'] = '1'
+        pygame.init()
 
+        pygame.display.set_caption('Flappy Bird Neural Network')
 
-def fitness_function(genomes, config):
-    window = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
-    game = GameController.Game()
+    def start(self):
+        self.population.run(self.fitness_function, 20)
 
-    networks = []
-    genomes_list = []
+    def fitness_function(self, genomes, config):
+        window = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
+        game = GameController.Game()
 
-    for genome_id, genome in genomes:
-        network = neat.nn.FeedForwardNetwork.create(genome, config)
-        networks.append(network)
-        game.birds.append(Bird.Bird(random.randint(200, 300), 250))
-        genome.fitness = 0
-        genomes_list.append(genome)
+        networks = []
+        genomes_list = []
 
-    clock = pygame.time.Clock()
-    fps = 30
+        for genome_id, genome in genomes:
+            network = neat.nn.FeedForwardNetwork.create(genome, config)
+            networks.append(network)
+            game.birds.append(Bird.Bird(random.randint(200, 300), 250))
+            genome.fitness = 0
+            genomes_list.append(genome)
 
-    run = True
+        clock = pygame.time.Clock()
+        fps = 30
 
-    # main game loop
-    while run:
-        clock.tick(fps)
+        run = True
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+        # main game loop
+        while run:
+            clock.tick(fps)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                    pygame.quit()
+
+            game.run(networks, genomes_list)
+            game.render(window, self.population.generation)
+
+            if len(networks) == 0:
                 run = False
-                pygame.quit()
+        # debug
+        stats_title = '*' * 5 + ' Best Generation Bird Stats ' + '*' * 5
 
-        game.run(networks, genomes_list)
-        game.render(window)
-
-        if len(networks) == 0:
-            run = False
-    # debug
-    stats_title = '*' * 5 + ' Best Generation Bird Stats ' + '*' * 5
-
-    print('')
-    print(stats_title)
-    print(f'Best Genome Fitness: {game.sorted_genomes[0].fitness}')
-    print(f'Best Bird Score: {game.best_bird.score}')
-    print(f'Best Network: {game.best_network}')
-    print('*' * len(stats_title))
-    print('')
+        print('')
+        print(stats_title)
+        print(f'Best Genome Fitness: {game.sorted_genomes[0].fitness}')
+        print(f'Best Bird Score: {game.best_bird.score}')
+        print(f'Best Network: {game.best_network}')
+        print('*' * len(stats_title))
+        print('')
 
 
 if __name__ == '__main__':
-    start()
+    main = Main()
+    main.start()

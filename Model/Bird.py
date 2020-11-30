@@ -42,18 +42,7 @@ class Bird:
             self.tick_count = 0
             self.height = self.y
 
-    def run(self):
-        # set bird frames per frame_rate value
-        now = pygame.time.get_ticks()
-
-        if now - self.last_update > self.frame_rate:
-            self.last_update = now
-            self.sprite_frames += 1
-            if self.sprite_frames > self.max_sprite_frames - 1:
-                self.sprite_frames = 0
-
-        # Calculates the displacement value of the object
-        self.tick_count += 1
+    def calculate_displacement(self):
         self.displacement = self.velocity * self.tick_count + (1.5 * (self.tick_count ** 2))
 
         if self.displacement >= self.displacement_limit:
@@ -77,6 +66,21 @@ class Bird:
         else:
             if self.tilt > - 90:
                 self.tilt -= BirdConstants.ROTATION_VELOCITY
+
+    def run(self):
+        # set bird frames per frame_rate value
+        now = pygame.time.get_ticks()
+
+        if now - self.last_update > self.frame_rate:
+            self.last_update = now
+            self.sprite_frames += 1
+            if self.sprite_frames > self.max_sprite_frames - 1:
+                self.sprite_frames = 0
+
+        # Calculates the displacement value of the object
+        self.tick_count += 1
+
+        self.calculate_displacement()
 
     def render(self, window):
 

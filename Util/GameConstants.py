@@ -8,6 +8,8 @@ class Global:
 
     BACKGROUND_SPRITE = os.path.join('.\\Resources\\img', 'background.png')
 
+    FONT = os.path.join('.\\Resources', 'EightBitDragon-anqx.ttf')
+
 
 class Bird:
     MAX_ROTATION = 18
