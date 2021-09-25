@@ -9,6 +9,7 @@ Project created to study neural network development and implementation
 - Flappy Bird copy game created with Pygame
 - Implementation of NEAT in the game ( fitness function, fitness calculation, population handling, etc. )
 - Object Oriented Programming
+- MVC design pattern
 
 ## Screenshots
 
@@ -23,6 +24,15 @@ Built with
 - ![Pygame](https://img.shields.io/badge/Pygame-https%3A%2F%2Fwww.pygame.org%2Fdocs%2F-green)
 - ![Neat](https://img.shields.io/badge/Neat--Python-https%3A%2F%2Fneat--python.readthedocs.io%2Fen%2Flatest%2F-blue)
 
+## How to use
+
+1 - Intstall the depedencies: to install the project depedencies, run the command in the terminal, inside the project folder: 
+```
+pip3 install -r requirements.txt
+```
+2 - Run the code
+
+3 - Watch the neural network learn how to play FlappyBird! :)
 
 ## About
 
