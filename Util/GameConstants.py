@@ -5,8 +5,8 @@ from win32api import GetSystemMetrics
 
 class Global:
     WIDTH = 800
-    # get the system screen height
-    HEIGHT = GetSystemMetrics(1) - 60 
+    # get the system screen height dynamically
+    HEIGHT = GetSystemMetrics(1) - 60
 
     BACKGROUND_SPRITE = os.path.join('.\\Resources\\img', 'background.png')
 
