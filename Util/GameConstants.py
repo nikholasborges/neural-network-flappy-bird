@@ -1,10 +1,12 @@
 import os
 import pygame
+from win32api import GetSystemMetrics
 
 
 class Global:
     WIDTH = 800
-    HEIGHT = 1000
+    # get the system screen height
+    HEIGHT = GetSystemMetrics(1) - 60 
 
     BACKGROUND_SPRITE = os.path.join('.\\Resources\\img', 'background.png')
 

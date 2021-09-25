@@ -1,11 +1,13 @@
-import random
-import pygame
 import os
+import random
+
 import neat
+import pygame
+
 from Controller import GameController
+from Model import Bird
 from Util.GameConstants import Global as Constants
 from Util.NeatConstants import NeatConstants
-from Model import Bird
 
 
 class Main:
@@ -13,8 +15,8 @@ class Main:
     def __init__(self):
 
         self.neat_config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction,
-                                         neat.DefaultSpeciesSet, neat.DefaultStagnation,
-                                         NeatConstants.CONFIG_PATH)
+                                              neat.DefaultSpeciesSet, neat.DefaultStagnation,
+                                              NeatConstants.CONFIG_PATH)
 
         self.population = neat.Population(self.neat_config)
         self.population.add_reporter(neat.StdOutReporter(True))
