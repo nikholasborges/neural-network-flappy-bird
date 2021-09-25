@@ -26,7 +26,7 @@ Built with
 
 ## How to use
 
-1 - Intstall the depedencies: to install the project depedencies, run the command in the terminal, inside the project folder: 
+1 - Install the depedencies: to install the project depedencies, run the command in the terminal, inside the project folder: 
 ```
 pip3 install -r requirements.txt
 ```
