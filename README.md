@@ -1,4 +1,4 @@
-## Neural Network on Flappy Bird
+## Project: Neural Network on Flappy Bird
 A simple neural network learning how to play the game Flappy Bird using NEAT (NeuroEvolution of Augmenting Topologies)
 
 ## Motivation
